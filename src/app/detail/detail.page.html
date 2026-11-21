@@ -26,7 +26,7 @@
   }
 
   @if (bookDetail && !isLoading) {
-    <ion-card appHighlight highlightColor="#7c3aed">
+    <ion-card appHighlight highlightColor="#1e2320">
       <ion-card-header>
         <ion-card-title>{{ bookDetail.title | uppercase }}</ion-card-title>
         @if (bookDetail.subtitle) {
@@ -35,12 +35,12 @@
       </ion-card-header>
       <ion-card-content>
         <div class="info-row">
-          <span class="info-label">🔑 ID recebido por rota:</span>
+          <span class="info-label">ID recebido por rota:</span>
           <ion-badge color="secondary">{{ bookKey }}</ion-badge>
         </div>
         @if (bookDetail.first_publish_date) {
           <div class="info-row">
-            <span class="info-label">📅 Publicação:</span>
+            <span class="info-label">Publicação:</span>
             <span>{{ bookDetail.first_publish_date }}</span>
           </div>
         }

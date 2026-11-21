@@ -2,7 +2,7 @@ import { Directive, Input, HostBinding, HostListener, ElementRef } from '@angula
 
 @Directive({ selector: '[appHighlight]', standalone: true })
 export class HighlightDirective {
-  @Input() highlightColor: string = '#4f8ef7';
+  @Input() highlightColor: string = '#6f7f64';
 
   constructor(private el: ElementRef) {}
 
