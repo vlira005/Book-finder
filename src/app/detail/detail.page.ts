@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UpperCasePipe } from '@angular/common';
 import {
@@ -25,8 +25,8 @@ import { HighlightDirective } from '../directives/highlight.directive';
   ],
 })
 export class DetailPage implements OnInit {
-  bookDetail: any = null;
-  isLoading = false;
+  bookDetail = signal<any>(null);
+  isLoading = signal(false);
   errorMessage = '';
   bookKey = '';
 
@@ -45,17 +45,17 @@ export class DetailPage implements OnInit {
   }
 
   loadDetail() {
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.booksService.getBookDetail(this.bookKey).subscribe({
-      next: (data) => { this.bookDetail = data; this.isLoading = false; },
-      error: () => { this.errorMessage = 'Não foi possível carregar os detalhes.'; this.isLoading = false; },
+      next: (data) => { this.bookDetail.set(data); this.isLoading.set(false); },
+      error: () => { this.errorMessage = 'Não foi possível carregar os detalhes.'; this.isLoading.set(false); },
     });
   }
 
   getDescription(): string {
-    if (!this.bookDetail?.description) return 'Sem descrição disponível.';
-    if (typeof this.bookDetail.description === 'string') return this.bookDetail.description;
-    return this.bookDetail.description?.value ?? 'Sem descrição disponível.';
+    if (!this.bookDetail()?.description) return 'Sem descrição disponível.';
+    if (typeof this.bookDetail().description === 'string') return this.bookDetail().description;
+    return this.bookDetail().description?.value ?? 'Sem descrição disponível.';
   }
 
   goBack() { this.router.navigate(['/home']); }

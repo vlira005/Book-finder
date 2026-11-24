@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>{{ 'book finder' | uppercase }}</ion-title>
+    <ion-title>{{ 'book finder' | uppercase }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
     animated="true">
   </ion-searchbar>
 
-  @if (isLoading) {
+  @if (isLoading()) {
     <div class="center-content">
       <ion-spinner name="crescent" color="primary"></ion-spinner>
       <ion-text color="medium"><p>Buscando livros...</p></ion-text>
@@ -25,12 +25,12 @@
     </ion-text>
   }
 
-  @if (books.length > 0) {
+  @if (books().length > 0) {
     <p class="results-count">
-      <ion-text color="medium">{{ books.length }} livros encontrados</ion-text>
+      <ion-text color="medium">{{ books().length }} livros encontrados</ion-text>
     </p>
 
-    @for (book of books; track book.key) {
+    @for (book of books(); track book.key) {
       <ion-card appHighlight highlightColor="#1e2320" (click)="goToDetail(book)">
         <div class="card-inner">
           <img [src]="getCoverUrl(book)" class="book-cover"
@@ -61,6 +61,6 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-title size="small" color="white">Book Finder — Projeto IONIC</ion-title>
+    <ion-title size="small" color="white">Book Finder - Projeto IONIC</ion-title>
   </ion-toolbar>
 </ion-footer>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { UpperCasePipe } from '@angular/common';
 import {
@@ -26,9 +26,9 @@ import { HighlightDirective } from '../directives/highlight.directive';
   ],
 })
 export class HomePage implements OnInit {
-  books: Book[] = [];
+  books = signal<Book[]>([]);
   searchTerm = 'tolkien';
-  isLoading = false;
+  isLoading = signal(false);
   errorMessage = '';
 
   constructor(private booksService: BooksService, private router: Router) {}
@@ -43,12 +43,12 @@ export class HomePage implements OnInit {
 
   search() {
     if (!this.searchTerm.trim()) return;
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.errorMessage = '';
-    this.books = [];
+    this.books.set([]);
     this.booksService.searchBooks(this.searchTerm).subscribe({
-      next: (data) => { this.books = data; this.isLoading = false; },
-      error: () => { this.errorMessage = 'Erro ao buscar livros.'; this.isLoading = false; },
+      next: (data) => { this.books.set(data); this.isLoading.set(false); },
+      error: () => { this.errorMessage = 'Erro ao buscar livros.'; this.isLoading.set(false); },
     });
   }
 
